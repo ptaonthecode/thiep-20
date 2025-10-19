@@ -34,7 +34,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 250px; /* Tăng khoảng cách giữa thiệp và câu hỏi */
+            gap: 250px; /* Khoảng cách trên màn hình lớn */
             transition: transform 0.5s ease-in-out, opacity 0.5s ease, visibility 0.5s;
         }
 
@@ -140,7 +140,6 @@
             }
         }
         
-        /* Khu vực câu hỏi và nút bấm */
         .question-area {
             display: flex;
             flex-direction: column;
@@ -148,15 +147,15 @@
             text-align: center;
             opacity: 0;
             transform: scale(0.8);
-            width: 0; /* Ban đầu không chiếm không gian */
-            visibility: hidden; /* Ẩn hoàn toàn */
+            width: 0;
+            visibility: hidden;
             transition: opacity 0.5s ease, transform 0.5s ease, width 0.5s ease;
         }
         
         .question-area.visible {
             opacity: 1;
             transform: scale(1);
-            width: 300px; /* Khi hiện ra sẽ chiếm không gian */
+            width: 300px;
             visibility: visible;
         }
 
@@ -195,10 +194,9 @@
         #noBtn {
             background-color: var(--primary-color);
             color: white;
-            transition: all 0.3s ease-out; /* Hiệu ứng mượt mà khi di chuyển */
+            transition: all 0.3s ease-out;
         }
         
-        /* Màn hình thông báo thành công */
         #success-message {
             position: fixed;
             top: 0;
@@ -226,6 +224,49 @@
             font-family: 'Dancing Script', cursive;
             font-size: 4rem;
             text-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* --- Responsive Styles for Mobile --- */
+        @media (max-width: 800px) {
+            body {
+                overflow-y: auto; /* Cho phép cuộn trên màn hình nhỏ */
+            }
+
+            .main-wrapper {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px 0; /* Thêm khoảng đệm trên dưới */
+                /* Đảm bảo wrapper không bị ẩn đi khi thiệp mở */
+                transform: translateX(0) !important;
+            }
+
+            .card-container {
+                width: 90vw;
+                max-width: 350px;
+                /* Tính chiều cao dựa trên chiều rộng để giữ tỉ lệ */
+                height: calc(90vw * 1.42); 
+                max-height: 500px;
+            }
+
+            /* Điều chỉnh hiệu ứng mở thiệp trên di động */
+            .card-container.open {
+                 transform: translateX(0); /* Giữ thiệp ở trung tâm */
+            }
+            
+            .question-area.visible {
+                width: 90vw;
+                max-width: 350px;
+            }
+            
+            /* Giảm cỡ chữ để vừa vặn hơn */
+            .card-front h1 { font-size: 2rem; }
+            .card-inside h2 { font-size: 1.8rem; }
+            .card-inside p { font-size: 0.9rem; }
+            .question-area h2 { font-size: 1.8rem; }
+            #success-message h1 {
+                font-size: 2.5rem;
+                padding: 0 20px;
+            }
         }
 
     </style>
@@ -274,7 +315,7 @@
                 if (isOpen) {
                     setTimeout(() => {
                         questionArea.classList.add('visible');
-                    }, 800); // Hiện câu hỏi sau khi thiệp mở xong
+                    }, 800);
                 } else {
                     questionArea.classList.remove('visible');
                 }
@@ -291,7 +332,6 @@
                 const btnHeight = noBtn.offsetHeight;
                 
                 const yesRect = yesBtn.getBoundingClientRect();
-                // Tăng vùng đệm an toàn để đảm bảo nút "Không" không bao giờ chạm vào nút "Có", ngay cả khi nút "Có" rất lớn.
                 const padding = 50; 
                 
                 let newX, newY;
@@ -300,7 +340,6 @@
                     newX = Math.random() * (screenWidth - btnWidth);
                     newY = Math.random() * (screenHeight - btnHeight);
                 } while (
-                    // Kiểm tra xem vị trí mới (của nút "Không") có chồng lên nút "Có" VÀ vùng đệm hay không
                     newX < yesRect.right + padding &&
                     newX + btnWidth > yesRect.left - padding &&
                     newY < yesRect.bottom + padding &&
