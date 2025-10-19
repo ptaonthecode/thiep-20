@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Ngày 20-10</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e91e63; /* Màu hồng chủ đạo */
+            --background-color: #fce4ec; /* Màu nền hồng rất nhạt */
+            --card-color: #fff;
+            --text-color: #333;
+            --green-color: #4CAF50;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            margin: 0;
+            perspective: 1000px;
+            overflow: hidden; /* Ẩn các phần tử tràn ra ngoài */
+            font-family: 'Quicksand', sans-serif;
+            transition: background-color 0.5s;
+        }
+        
+        /* Wrapper chính để chứa thiệp và câu hỏi */
+        .main-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 250px; /* Tăng khoảng cách giữa thiệp và câu hỏi */
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .card-container {
+            position: relative;
+            width: 350px;
+            height: 500px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
+        }
+
+        .card-container.open {
+            transform: translateX(175px);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ff80ab, #e91e63);
+            color: white;
+            z-index: 2;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .card-container.open .card-front {
+            transform: rotateY(-180deg);
+        }
+
+        .card-front h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .card-front p {
+            font-size: 1rem;
+            border: 1px solid white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        .card-inside {
+            background: var(--card-color);
+            color: var(--text-color);
+            z-index: 1;
+            transform: rotateY(0deg);
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        .card-inside h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .card-inside p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        .petal {
+            position: absolute;
+            top: -50px;
+            background-color: rgba(255, 182, 193, 0.8);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Khu vực câu hỏi và nút bấm */
+        .question-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            width: 0; /* Ban đầu không chiếm không gian */
+            visibility: hidden; /* Ẩn hoàn toàn */
+            transition: opacity 0.5s ease, transform 0.5s ease, width 0.5s ease;
+        }
+        
+        .question-area.visible {
+            opacity: 1;
+            transform: scale(1);
+            width: 300px; /* Khi hiện ra sẽ chiếm không gian */
+            visibility: visible;
+        }
+
+        .question-area h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+        }
+
+        .buttons-container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .qa-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn {
+            background-color: var(--green-color);
+            color: white;
+            transform-origin: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #noBtn {
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease-out; /* Hiệu ứng mượt mà khi di chuyển */
+        }
+        
+        /* Màn hình thông báo thành công */
+        #success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s, visibility 0.5s;
+            z-index: 100;
+        }
+
+        #success-message.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        #success-message h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            text-shadow: 0 0 15px var(--primary-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper" id="mainWrapper">
+        <div class="card-container" id="cardContainer">
+            <div class="card-face card-front">
+                <h1>Gửi người phụ nữ tuyệt vời</h1>
+                <p>(Ấn để mở thiệp)</p>
+            </div>
+            <div class="card-face card-inside">
+                <h2>Chúc mừng ngày 20-10!</h2>
+                <p>Chúc bạn luôn xinh đẹp, rạng rỡ và ngập tràn hạnh phúc. Cảm ơn vì đã luôn là nguồn cảm hứng và là bông hoa xinh đẹp nhất trong cuộc sống này.</p>
+                 <p class="signature">apt.ndy</p>
+            </div>
+        </div>
+
+        <div class="question-area" id="questionArea">
+            <h2>Em có thích anh không?</h2>
+            <div class="buttons-container">
+                <button class="qa-btn" id="yesBtn">Cóoooo!</button>
+                <button class="qa-btn" id="noBtn">Không</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-message">
+        <h1>Anh biết mà, anh cũng yêu em! ❤️</h1>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainWrapper = document.getElementById('mainWrapper');
+            const cardContainer = document.getElementById('cardContainer');
+            const questionArea = document.getElementById('questionArea');
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const successMessage = document.getElementById('success-message');
+            
+            let yesButtonScale = 1;
+
+            cardContainer.addEventListener('click', () => {
+                const isOpen = cardContainer.classList.toggle('open');
+                if (isOpen) {
+                    setTimeout(() => {
+                        questionArea.classList.add('visible');
+                    }, 800); // Hiện câu hỏi sau khi thiệp mở xong
+                } else {
+                    questionArea.classList.remove('visible');
+                }
+            });
+
+            const moveButton = () => {
+                if(noBtn.style.position !== 'fixed') {
+                    noBtn.style.position = 'fixed';
+                }
+
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+                const btnWidth = noBtn.offsetWidth;
+                const btnHeight = noBtn.offsetHeight;
+                
+                const yesRect = yesBtn.getBoundingClientRect();
+                // Tăng vùng đệm an toàn để đảm bảo nút "Không" không bao giờ chạm vào nút "Có", ngay cả khi nút "Có" rất lớn.
+                const padding = 50; 
+                
+                let newX, newY;
+
+                do {
+                    newX = Math.random() * (screenWidth - btnWidth);
+                    newY = Math.random() * (screenHeight - btnHeight);
+                } while (
+                    // Kiểm tra xem vị trí mới (của nút "Không") có chồng lên nút "Có" VÀ vùng đệm hay không
+                    newX < yesRect.right + padding &&
+                    newX + btnWidth > yesRect.left - padding &&
+                    newY < yesRect.bottom + padding &&
+                    newY + btnHeight > yesRect.top - padding
+                );
+                
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
+
+                yesButtonScale *= 1.4;
+                yesBtn.style.transform = `scale(${yesButtonScale})`;
+            }
+
+            noBtn.addEventListener('mouseover', moveButton);
+            noBtn.addEventListener('click', moveButton);
+
+            yesBtn.addEventListener('click', () => {
+                successMessage.classList.add('visible');
+                
+                noBtn.removeEventListener('mouseover', moveButton);
+                noBtn.removeEventListener('click', moveButton);
+                noBtn.style.display = 'none';
+
+                mainWrapper.style.opacity = '0';
+                mainWrapper.style.visibility = 'hidden';
+            });
+
+            const createPetal = () => {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                const size = Math.random() * 15 + 5;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 5 + 5;
+                const delay = Math.random() * 3;
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size}px`;
+                petal.style.left = `${left}vw`;
+                petal.style.animationDuration = `${duration}s`;
+                petal.style.animationDelay = `${delay}s`;
+                petal.style.backgroundColor = `rgba(${233 + Math.random() * 22}, ${30 + Math.random() * 120}, ${99 + Math.random() * 20}, 0.8)`;
+                document.body.appendChild(petal);
+                setTimeout(() => {
+                    petal.remove();
+                }, (duration + delay) * 1000);
+            }
+            setInterval(createPetal, 300);
+        });
+    </script>
+
+</body>
+</html>
+
